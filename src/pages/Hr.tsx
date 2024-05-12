@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { json } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const initialState = {
   name: "",
@@ -39,13 +40,20 @@ const Hr = () => {
       password: values.password,
       position: values.position,
     };
+      for (const [field, value] of Object.entries(values)) {
+        if (!value.trim()) {
+         toast.error(`${field} hissəsi boş qala bilməz.`);
+         return;
+        }
+      }
     const updatedWorkers = workers ? [...workers, newWorker] : [newWorker];
     localStorage.setItem("workers", JSON.stringify(updatedWorkers));
     setWorkers(updatedWorkers);
     console.log(initialState);
 
     setValues(initialState);
-    setGender(""); 
+      setGender(""); 
+      toast.success('Əlavə edildi')
   };
   return (
     <div className=" h-screen flex  ">
